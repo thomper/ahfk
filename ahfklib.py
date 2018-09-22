@@ -130,10 +130,12 @@ class Column(Base_):
         db_session_.commit()
 
     def next_sort_order(self):
-        if self.notes is None or len(self.notes) == 0:
+        notes = list_coalesce(self.notes)
+        sort_orders = tuple(note.sort_order for note in notes if note.sort_order is not None)
+        if len(sort_orders) == 0:
             max_sort_order = 0
         else:
-            max_sort_order = max(note.sort_order for note in self.notes if note.sort_order is not None)
+            max_sort_order = max(sort_orders)
         return max_sort_order + 1
 
     def swap_notes(self, note_a, note_b):
