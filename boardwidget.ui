@@ -27,11 +27,26 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="columnsLayout">
-       <property name="spacing">
-        <number>10</number>
+      <widget class="QScrollArea" name="scrollArea">
+       <property name="widgetResizable">
+        <bool>true</bool>
        </property>
-      </layout>
+       <widget class="QWidget" name="scrollAreaWidgetContents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>600</width>
+          <height>400</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="columnsLayout">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+        </layout>
+       </widget>
+      </widget>
      </item>
     </layout>
    </item>

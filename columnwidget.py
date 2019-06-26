@@ -40,10 +40,10 @@ class ColumnWidget(QWidget, columnwidgetui.Ui_ColumnWidget):
         self.setParent(None)
 
     def move_left(self):
-        self.parent().move_column_left(self)
+        self.parent_board_widget.move_column_left(self)
 
     def move_right(self):
-        self.parent().move_column_right(self)
+        self.parent_board_widget.move_column_right(self)
 
     def move_note_to_index_(self, note_widget, index):
         self.notesLayout.removeWidget(note_widget)
@@ -60,13 +60,17 @@ class ColumnWidget(QWidget, columnwidgetui.Ui_ColumnWidget):
         self.move_note_to_index_(note_widget, new_index)
 
     def move_note_left(self, note_widget):
-        self.parent().move_note_left(self, note_widget)
+        self.parent_board_widget.move_note_left(self, note_widget)
 
     def move_note_right(self, note_widget):
-        self.parent().move_note_right(self, note_widget)
+        self.parent_board_widget.move_note_right(self, note_widget)
 
     def __repr__(self):
         return '<ColumnWidget>'
 
     def __str__(self):
         return self.__repr__()
+
+    @property
+    def parent_board_widget(self):
+        return self.parent().parent().parent().parent()
