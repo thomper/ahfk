@@ -5,7 +5,9 @@ from PyQt5.QtWidgets import *
 
 
 class ColumnWidget(QWidget, columnwidgetui.Ui_ColumnWidget):
-    def __init__(self, column, *args, **kwargs):
+    column = ...  # type: lib.Column
+
+    def __init__(self, column: lib.Column, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
         self.column = column
@@ -20,7 +22,7 @@ class ColumnWidget(QWidget, columnwidgetui.Ui_ColumnWidget):
         self.moveLeftButton.clicked.connect(self.move_left)
         self.moveRightButton.clicked.connect(self.move_right)
 
-    def add_existing_note(self, note):
+    def add_existing_note(self, note: lib.Note):
         self.notesLayout.addWidget(NoteWidget(note))
         if note.column != self.column:
             note.update_column(self.column)

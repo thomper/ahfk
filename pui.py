@@ -30,13 +30,14 @@ class MainWindow(QMainWindow):
             else:
                 self.board = lib.new_board('default board')
 
-        self.setWindowTitle('ahfkanban')
+        self.setWindowTitle('ahfkanban - {}'.format(self.board.name))
 
         widget = BoardWidget(self.board)
         self.setCentralWidget(widget)
 
 
-app = QApplication(sys.argv)
-window = MainWindow()
-window.show()
-app.exec_()
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    app.exec_()

@@ -5,7 +5,9 @@ from PyQt5.QtWidgets import *
 
 
 class BoardWidget(QWidget, boardwidgetui.Ui_BoardWidget):
-    def __init__(self, board, *args, **kwargs):
+    board = ...  # type: lib.Board
+
+    def __init__(self, board: lib.Board, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
         self.board = board
@@ -15,7 +17,7 @@ class BoardWidget(QWidget, boardwidgetui.Ui_BoardWidget):
 
         self.newColumnButton.clicked.connect(self.add_new_column)
 
-    def add_existing_column(self, column):
+    def add_existing_column(self, column: lib.Column):
         self.columnsLayout.addWidget(ColumnWidget(column))
 
     def add_new_column(self):
@@ -44,13 +46,11 @@ class BoardWidget(QWidget, boardwidgetui.Ui_BoardWidget):
     def move_note_left(self, old_column_widget, note_widget):
         old_column_index = self.columnsLayout.indexOf(old_column_widget)
         new_column_index = max(0, old_column_index - 1)
-        if old_column_index == new_column_index:
-            return
-        self.move_note_to_column_index(old_column_widget, new_column_index, note_widget)
+        if old_column_index != new_column_index:
+            self.move_note_to_column_index(old_column_widget, new_column_index, note_widget)
 
     def move_note_right(self, old_column_widget, note_widget):
         old_column_index = self.columnsLayout.indexOf(old_column_widget)
         new_column_index = min(self.columnsLayout.count() - 1, self.columnsLayout.indexOf(old_column_widget) + 1)
-        if old_column_index == new_column_index:
-            return
-        self.move_note_to_column_index(old_column_widget, new_column_index, note_widget)
+        if old_column_index != new_column_index:
+            self.move_note_to_column_index(old_column_widget, new_column_index, note_widget)

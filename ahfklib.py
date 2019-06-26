@@ -19,8 +19,8 @@ db_session_ = scoped_session(sessionmaker(bind=engine_))
 Base_.query = db_session_.query_property()
 
 
-def list_coalesce(seq_or_none):
-    return [] if seq_or_none is None else seq_or_none
+def list_coalesce(seq):
+    return [] if seq is None else seq
 
 
 # TODO: Consider moving the following table declarations to a models.py module
@@ -139,6 +139,8 @@ class Column(Base_):
         return max_sort_order + 1
 
     def swap_notes(self, note_a, note_b):
+        if note_a not in self.notes or note_b not in self.notes:
+            raise Exception('Note {} or {} not in column {}'.format(note_a, note_b, self))
         note_a.sort_order, note_b.sort_order = note_b.sort_order, note_a.sort_order
         db_session_.add_all((note_a, note_b))
         db_session_.commit()
